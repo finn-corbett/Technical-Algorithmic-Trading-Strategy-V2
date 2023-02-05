@@ -72,6 +72,15 @@ The algorithm creates a neural network that uses technical indicators as inputs,
 
 This learning method is comparable to online learning, with data being used to train the network each day once it is available. Whilst it is impossible to buy and sell stocks at the closing price, as it is a 'past event' once the data is gathered, the speed of the algorithm would enable a near-closing-price to be gathered and processed within a short period of the daily stock market close. The change in stock value in the last small fraction of the day is neglected, and the closing price is used for indicator calculation and buy/sell orders for ease of programming.
 
+The neural network is create with 5 layers:
+* An input layer that is dynamically constructed the same number of nodes as inputs (technical indicators)
+* A densely connected layer with 2 times the number of nodes as the first layer, with sigmoid activation functions
+* A densely connected layer with 3 times the number of nodes as the first layer, with sigmoid activation functions
+* A densely connected layer with 2 times the number of nodes as the first layer, with sigmoid activation functions
+* A densely connected output layer with one node and no activation function
+
+The network is trained using stochastic gradient descent (learning rate=0.1) and mean absolute error (MAE) loss. As training is not conducted with batches, the loss function is equivalent to absolute error. This relatively high learning rate has been selected to ensure that the network can quickly adjust to changes in stock market behaviour.
+
 ### Portfolio Allocation <a name="portfolio-allocation"></a>
 
 $10000 is allocated to each of the 10 stocks, and any losses or gains are applied to this value, so that underperforming stocks take up a smaller portion of the portfolio, whilst overperforming stocks take up a larger portion. Any buy or sell signal sells and buys a stock with all of the money available to use for that stock. When buying and selling stocks, zero fees are assumed and dividends are not accounted for.
@@ -89,7 +98,7 @@ Sharpe ratios for the 3 investment strategies are:
 
 The sharpe ratios are calculated with a risk free rate of 1.809%, the yield of the US 5 year treasury bond on Sep 1 2017.
 
-These performance results indicate the the algorithmic trading strategy is able to reduce the risk compared to alternative investing strategies, such that the risk-adjusted returns are significantly greater whilst maintaining a similar level of profitability. The SPY is a widely used passive investing strategy, which is often implimented as a benchmark due to its historic performance and passive nature. These results indicate the algorithmic trading strategy being preferable to passive investing with the SPY, and being able to be applied to investment portfolios of large companies to reduce risk.
+These performance results indicate the the algorithmic trading strategy is able to reduce the risk compared to alternative investing strategies, such that the risk-adjusted returns are significantly greater whilst maintaining a similar level of profitability. The SPY is a widely used passive investing strategy, which is often implimented as a benchmark due to its historic performance and passive nature. This strategy would be particularly useful for those looking to generate similar returns to benchmarks without large drawdowns, bridging the gap between long term stock investing and bond investing. Long term stock investing typically prevents investors from being able to withdraw funds after a short time frame as it may be at a loss, whereas bonds allow guaranteed returns after a short time frame, although profits tend to be reduced compared to stocks.
 ### Performance Charts
 ### AAPL
 <img src="https://github.com/finn-corbett/Technical-Algorithmic-Trading-Strategy-V2/blob/main/Images/AAPL.png" alt="drawing" width="750"/> 
@@ -127,6 +136,6 @@ These performance results indicate the the algorithmic trading strategy is able 
 The trading strategy is able to produce steady returns with preferable risk characteristics through a reduction in portfolio volatility. It can be seen across the various performance graphs that the strategy is capable of preventing large losses, such as that of the market crash caused by COVID-19. This trading strategy is recommended for passive investors.
 
 The main concerns with this strategy and algorithm are:
-* stop losses are not yet implimented, meaning that the algorithm may lose excessive amounts of money to large crashes.
+* stop losses were not implimented, meaning that the algorithm may lose excessive amounts of money to large crashes.
 * algorithm must wait to calculate indicators fully, resulting in downtime when it is initiated
 * Closing prices are used for buy/sell signals and orders, which is practically impossible
